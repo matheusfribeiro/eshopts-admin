@@ -1,17 +1,17 @@
 "use client";
+
 import * as z from "zod";
-import { useState } from "react";
 import axios from "axios";
-import { Billboard } from "@prisma/client";
-import { Trash } from "lucide-react";
-import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { Trash } from "lucide-react";
+import { Billboard } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 
-import { Heading } from "@/components/ui/heading";
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Form,
   FormControl,
@@ -20,10 +20,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Heading } from "@/components/ui/heading";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { ApiAlert } from "@/components/ui/api-alert";
-import { useOrigin } from "@/hooks/use-origin";
 import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
@@ -42,7 +41,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
 }) => {
   const params = useParams();
   const router = useRouter();
-  const origin = useOrigin();
+
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -61,7 +60,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     defaultValues: initialData || {
       label: "",
       imageUrl: "",
-    },
+    }
   });
 
   const onSubmit = async (data: BillboardFormValues) => {
@@ -92,7 +91,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         `/api//${params.storeId}/billboards/${params.billboardId}`
       );
       router.refresh();
-      router.push("/");
+      router.push(`/${params.storeId}/billboards`);
       toast.success("Billboard deletado");
     } catch (error) {
       toast.error(
@@ -118,7 +117,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
           <Button
             disabled={loading}
             variant="destructive"
-            size="icon"
+            size="sm"
             onClick={() => setOpen(true)}
           >
             <Trash className="h-4 w-4" />
@@ -173,7 +172,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
           </Button>
         </form>
       </Form>
-      <Separator />
+      
     </>
   );
 };
