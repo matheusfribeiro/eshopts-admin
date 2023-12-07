@@ -9,6 +9,7 @@ import { Heading } from "@/components/ui/heading"
 import { Separator } from "@/components/ui/separator"
 
 import { BillboardColumn, columns } from "./columns"
+import { ApiList } from "@/components/ui/api-list"
 
 interface BillboardClientProps {
   data: BillboardColumn[]
@@ -35,6 +36,9 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
       </div>
       <Separator />
       <DataTable searchKey="label" columns={columns} data={data} />
+      <Heading title="API" description="API calls for billboard" />
+      <Separator />
+      <ApiList entityName="billboards" entityIdName="billboardId" />
     </>
   )
 }
